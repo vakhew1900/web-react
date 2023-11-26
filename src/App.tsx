@@ -6,6 +6,7 @@ import { Post } from './types'
 
 function App() {
   const [posts, setPosts] = useState<Post[]>([])
+  let isLoading : boolean = false;
   useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/posts')
       .then((response) => {
@@ -13,8 +14,13 @@ function App() {
         throw new Error('Request failed.')
       })
       .then((json) => { 
-        setPosts(json); console.log(json)}
-        )
+        // if(isLoading == false)
+        {
+          setPosts(json) 
+          console.log(json)
+          isLoading = true;
+        }
+      } )
       .catch((error) => {
         console.log(error)
       })
