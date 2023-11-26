@@ -18,7 +18,8 @@ export default function AddTodo() {
           e.preventDefault()
           const formData = new FormData(e.currentTarget)
           const title = formData.get('title') as string
-          const body = "ffff";
+          const body = formData.get('body') as string 
+          console.log(body)
           if (title) {
             if (inputRef.current) inputRef.current.value = ''
             setPosts?.((prevPosts) => {
@@ -26,7 +27,7 @@ export default function AddTodo() {
                 userId: 1,
                 id: prevPosts.length + 1,
                 title: title,
-                body : body,
+                body: body,
               }]
             })
           }
@@ -39,11 +40,21 @@ export default function AddTodo() {
         }}
       >
         <TextField
-          variant='outlined'
+          variant='filled'
           name='title'
-          placeholder='Todo title'
+          placeholder='post title'
           inputRef={inputRef} />
-        <Button type='submit'>Add todo</Button>
+
+        <TextField
+          variant='filled'
+          name='body'
+          placeholder='post body'
+          inputRef={inputRef} 
+          multiline
+          rows={4}
+          />
+
+        <Button type='submit'>Add Post</Button>
       </Box>
     </Container>
   )
