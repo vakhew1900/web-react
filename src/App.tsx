@@ -3,6 +3,7 @@ import { Post } from './types'
 import SetPostsContext from './context/setPostsContext'
 import AppHeader from './components/AppHeader'
 import AddPost from './components/AddPost'
+import PostList from './components/PostList'
 
 function App() {
   const [posts, setPosts] = useState<Post[]>([])
@@ -31,6 +32,7 @@ function App() {
       <SetPostsContext.Provider value={setPosts}>
         <AppHeader />
         <AddPost/>
+        <PostList posts = {posts}/>
       </SetPostsContext.Provider>
     </>
   )

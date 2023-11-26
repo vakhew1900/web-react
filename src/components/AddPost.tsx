@@ -6,12 +6,13 @@ export default function AddTodo() {
   const setPosts = useSetPosts()
   const inputRef = useRef<HTMLInputElement>(null)
   return (
-    <Container maxWidth={'sm'}>
+    <Container maxWidth={'md'} sx = {{mb: 10}}>
       <Typography
         variant='h5'
         component={'h3'}
-        sx={{ mt: 2 }}>
-        Add todo
+        sx={{ mt: 2}}
+        textAlign={'center'}>
+        Add Post
       </Typography>
       <Box component={'form'}
         onSubmit={e => {
@@ -20,7 +21,7 @@ export default function AddTodo() {
           const title = formData.get('title') as string
           const body = formData.get('body') as string 
           console.log(body)
-          if (title) {
+          if (title && body) {
             if (inputRef.current) inputRef.current.value = ''
             setPosts?.((prevPosts) => {
               return [...prevPosts, {
@@ -43,7 +44,9 @@ export default function AddTodo() {
           variant='filled'
           name='title'
           placeholder='post title'
-          inputRef={inputRef} />
+          inputRef={inputRef} 
+          color = {'success'}
+          />
 
         <TextField
           variant='filled'
@@ -52,9 +55,10 @@ export default function AddTodo() {
           inputRef={inputRef} 
           multiline
           rows={4}
+          color={'success'}
           />
 
-        <Button type='submit'>Add Post</Button>
+        <Button type='submit' color = {'success'}>Add Post</Button>
       </Box>
     </Container>
   )
