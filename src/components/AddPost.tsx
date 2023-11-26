@@ -29,6 +29,7 @@ export default function AddTodo() {
                 id: prevPosts.length + 1,
                 title: title,
                 body: body,
+                like: false
               }]
             })
           }

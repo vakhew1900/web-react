@@ -15,10 +15,11 @@ function App() {
         throw new Error('Request failed.')
       })
       .then((json) => { 
-        // if(isLoading == false)
-        {
-          setPosts(json) 
-          console.log(json)
+         if(isLoading == false)
+        { 
+          const newPosts = json.map((post: any) => {return {...post, like: false}})
+          setPosts(newPosts) 
+          console.log(newPosts)
           isLoading = true;
         }
       } )
