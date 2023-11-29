@@ -24,14 +24,18 @@ export default function AddTodo() {
           if (title && body) {
             if (inputRef.current) inputRef.current.value = ''
             setPosts?.((prevPosts) => {
-              return [...prevPosts, {
+              const newPosts =  [...prevPosts, {
                 userId: 1,
                 id: prevPosts.length + 1,
                 title: title,
                 body: body,
                 like: false
               }]
+            
+            localStorage.setItem("posts", JSON.stringify(newPosts));
+            return newPosts;
             })
+            
           }
         }}
         sx={{

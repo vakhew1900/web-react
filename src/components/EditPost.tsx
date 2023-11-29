@@ -27,7 +27,7 @@ export default function EditPost({ post, setIsRedact }: Props) {
                 if (inputRef.current) inputRef.current.value = ''
                 
                 setPosts?.((prevPosts) => {
-                    return prevPosts.map((t) => {
+                    const newPosts = prevPosts.map((t) => {
                         if (t.id === post.id) {
                             return {
                                 ...t,
@@ -36,9 +36,11 @@ export default function EditPost({ post, setIsRedact }: Props) {
                             }
                         }
                         return t
-                    })
-                })
+                    }
+                    )
 
+                    return newPosts;
+                })
                 setIsRedact?.(false)
             }
         }

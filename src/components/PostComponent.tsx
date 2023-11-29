@@ -12,7 +12,7 @@ type Props = {
     post: Post
 }
 
-export default function PostComponent({ post }: Props) {
+export default React.memo(function PostComponent({ post }: Props) {
 
     const [isRedact, setIsRedact] = React.useState<boolean>(false)
     const setPosts = useSetPosts()
@@ -44,9 +44,10 @@ export default function PostComponent({ post }: Props) {
                     {content}
 
                     <Box sx={{ display: "flex", justifyContent: "start", mb: 1, ml: 1 }}>
+                        
                         <IconButton onClick={() => {
                             setPosts?.((prevPosts) => {
-                                return prevPosts.map((t) => {
+                                const newPosts = prevPosts.map((t) => {
                                     if (t.id === post.id) {
                                         return {
                                             ...t,
@@ -54,7 +55,10 @@ export default function PostComponent({ post }: Props) {
                                         }
                                     }
                                     return t
-                                })
+                                }
+                                )
+                                localStorage.setItem("posts", JSON.stringify(newPosts));
+                                return newPosts;
                             })
                         }}
                         >
@@ -77,4 +81,4 @@ export default function PostComponent({ post }: Props) {
             </Grid >
         </>
     )
-}
+})
