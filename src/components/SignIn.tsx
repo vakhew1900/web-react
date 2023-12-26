@@ -2,10 +2,12 @@ import { Box, Button, Container, TextField} from "@mui/material";
 import { useRef } from "react";
 import { server_address } from "../server_adress";
 import { useNavigate } from "react-router-dom";
+import useSetIsAuth from "../hooks/useIsAuth";
 
 export default function SignInForm() {
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate(); 
+  const setIsAuth = useSetIsAuth();
   return (
     <Container maxWidth={'md'}>
         
@@ -27,14 +29,17 @@ export default function SignInForm() {
           }).then( respone => {
             if(respone.status != 200)
             {
-              //alert(respone)
+              
               return respone.json();
             }
             else {
+              setIsAuth?.(true);
               navigate("/");
             }
         }  
-        ).then(res => {console.log(res); alert(res.message)})
+        ).then(res => {
+          console.log(res); 
+          if (res == undefined) { return } alert(res.message)})
           
         }}
         sx={{

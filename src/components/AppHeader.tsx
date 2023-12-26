@@ -6,14 +6,61 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-
 import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+import { server_address } from "../server_adress";
+import useSetIsAuth from "../hooks/useIsAuth";
+import useSetPosts from "../hooks/useSetPosts";
 
 export default function ButtonAppBar() {
-
-  const navigate = useNavigate(); 
-  const routeChange = (path: string) =>{ 
+  const navigate = useNavigate();
+  const setIsAuth = useSetIsAuth();
+  const setPosts = useSetPosts();
+  const routeChange = (path: string) => {
     navigate(path);
+  };
+
+  
+  let buttons = (
+    <>
+      <Button
+        color="inherit"
+        onClick={() => {
+          routeChange("signup");
+        }}
+      >
+        Sign Up
+      </Button>
+      <Button
+        color="inherit"
+        onClick={() => {
+          routeChange("login");
+        }}
+      >
+        Login
+      </Button>
+    </>
+  );
+
+  console.log(Cookies.get('token'))
+  if(Cookies.get('token') != undefined && Cookies.get('token') != null){
+    buttons = (
+      <>
+      <Button
+        color="inherit"
+        onClick={() => {
+          fetch(server_address + "/api/users/logout", {
+            method: "POST",
+            credentials: "include",
+          })
+          .then(() => { setIsAuth?.(false);  setPosts?.([]); routeChange("/login")})
+        }}
+      >
+        Logout
+      </Button>
+
+      </>
+    )
   }
 
   return (
@@ -29,25 +76,18 @@ export default function ButtonAppBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }} onClick={() => {routeChange("/")}}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1 }}
+            onClick={() => {
+              routeChange("/");
+            }}
+          >
             News
           </Typography>
-          <Button
-            color="inherit"
-            onClick={() => {
-             routeChange("signup")
-            }}
-          >
-            Sign Up
-          </Button>
-          <Button
-            color="inherit"
-            onClick={() => {
-              routeChange("login")
-            }}
-          >
-            Login
-          </Button>
+
+          {buttons}
         </Toolbar>
       </AppBar>
     </Box>
